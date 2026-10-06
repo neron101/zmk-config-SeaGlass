@@ -40,7 +40,7 @@
     trackball_listener {
         compatible = "zmk,input-listener";
         device = <&trackball>;
-
+        input-processors = <&mouse_runtime_input_processor>; // DYA Studioから速度変更可
     };
 };
 
@@ -82,7 +82,11 @@
         reg = <0>;
         spi-max-frequency = <4000000>;
         irq-gpios = <&gpio1 15 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-        snipe-layers = <1>;
-        scroll-layers = <8>;
+        automouse-layer = <4>;  // Mouse レイヤー（トラボを動かすと自動で入る）
+        scroll-layers = <5>;    // Scroll レイヤー
     };
 };
+
+/* DYA Studio: trackball speed runtime processor (included last: it redefines RC()) */
+#include <input/processors/runtime-input-processor.dtsi>
+#include <behaviors/battery_history_request.dtsi>
